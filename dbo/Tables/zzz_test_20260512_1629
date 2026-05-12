@@ -1,0 +1,8 @@
+CREATE TABLE [dbo].[zzz_test_20260512_1629] (
+    [work_schedule_rid] INT            IDENTITY (100, 1) NOT NULL,
+    [tenant_id]         INT            NULL,
+    [description]       NVARCHAR (100) NULL,
+    [created]           DATETIME       NULL,
+    [timezone_rid]      INT            NULL
+);
+GO

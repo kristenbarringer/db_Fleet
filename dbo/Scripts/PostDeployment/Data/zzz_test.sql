@@ -2,10 +2,10 @@
 -- post-deploy data load 
 MERGE INTO dbo.zzz_test_pipeline_20260514_1707 AS target
 USING (VALUES
-    (1, 'Sedan', 'PassengerKLB'),
-    (2, 'Truck', 'CommercialKLB'),
-    (3, 'Van', 'CommercialKLB'),
-    (4, 'Motorcycle', 'PassengerKLB')
+    (1, 'Sedan', 'PassengerKLB_20260514_1759'),
+    (2, 'Truck', 'CommercialKLB_20260514_1759'),
+    (3, 'Van', 'CommercialKLB_20260514_1759'),
+    (4, 'Motorcycle', 'PassengerKLB_20260514_1759')
 ) AS source (ID, desc1, desc2)
 ON target.ID = source.ID
 

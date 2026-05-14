@@ -39,15 +39,17 @@ steps:
       pathToPublish: '$(Build.ArtifactStagingDirectory)'
       artifactName: 'dacpac'
 
-  - task: SqlAzureDacpacDeployment@1
+  - task: PowerShell@2
     displayName: 'Deploy dacpac to Azure SQL Dev'
     inputs:
-      ConnectionType: 'server'
-      AuthenticationType: 'server'
-      ServerName: '$(sqlServerName)'
-      DatabaseName: '$(databaseName)'
-      SqlUsername: '$(sqlUser)'
-      SqlPassword: '$(sqlPassword)'
-      deployType: 'DacpacTask'
-      DeploymentAction: 'Publish'
-      DacpacFile: '$(Build.ArtifactStagingDirectory)/*.dacpac'
+      targetType: 'inline'
+      script: |
+        dotnet tool install -g Microsoft.SqlPackage
+        $dacpac = Get-ChildItem -Path "$(Build.ArtifactStagingDirectory)" -Filter *.dacpac -Recurse | Select-Object -First 1
+        Write-Host "Deploying $($dacpac.FullName)"
+        SqlPackage /Action:Publish `
+          /SourceFile:"$($dacpac.FullName)" `
+          /TargetServerName:"$(sqlServerName)" `
+          /TargetDatabaseName:"$(databaseName)" `
+          /TargetUser:"$(sqlUser)" `
+          /TargetPassword:"$(sqlPassword)"

@@ -1,12 +1,11 @@
-print 'is this on';
-/*
+
 -- post-deploy data load 
 MERGE INTO dbo.zzz_test_pipeline_20260514_1707 AS target
 USING (VALUES
-    (1, 'Sedan', 'Passenger'),
-    (2, 'Truck', 'Commercial'),
-    (3, 'Van', 'Commercial'),
-    (4, 'Motorcycle', 'Passenger')
+    (1, 'Sedan', 'PassengerKLB'),
+    (2, 'Truck', 'CommercialKLB'),
+    (3, 'Van', 'CommercialKLB'),
+    (4, 'Motorcycle', 'PassengerKLB')
 ) AS source (ID, desc1, desc2)
 ON target.ID = source.ID
 
@@ -26,4 +25,3 @@ WHEN NOT MATCHED BY SOURCE THEN
     DELETE
 
 ; -- the trailing semicolon is REQUIRED on MERGE
-*/

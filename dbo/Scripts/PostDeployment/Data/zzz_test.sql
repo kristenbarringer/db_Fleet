@@ -1,4 +1,4 @@
- 
+ /*
 
 -- post-deploy data load 
 MERGE INTO dbo.zzz_test_pipeline_20260514_1707 AS target
@@ -26,3 +26,4 @@ WHEN NOT MATCHED BY SOURCE THEN
     DELETE
 
 ; -- the trailing semicolon is REQUIRED on MERGE
+*/

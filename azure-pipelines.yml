@@ -42,6 +42,7 @@ steps:
   - task: SqlAzureDacpacDeployment@1
     displayName: 'Deploy dacpac to Azure SQL Dev'
     inputs:
+      ConnectionType: 'server'
       AuthenticationType: 'server'
       ServerName: '$(sqlServerName)'
       DatabaseName: '$(databaseName)'

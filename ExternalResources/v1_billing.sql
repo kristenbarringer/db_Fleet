@@ -1,3 +1,4 @@
+/* TODO FIX THIS
 CREATE EXTERNAL DATA SOURCE [v1_billing]
     WITH (
     TYPE = RDBMS,
@@ -6,4 +7,5 @@ CREATE EXTERNAL DATA SOURCE [v1_billing]
     CREDENTIAL = [elasticquery_billing]
     );
 GO
+*/
 

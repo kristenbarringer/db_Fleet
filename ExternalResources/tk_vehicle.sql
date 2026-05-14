@@ -1,3 +1,4 @@
+/* TODO FIX THIS
 CREATE EXTERNAL DATA SOURCE [tk_vehicle]
     WITH (
     TYPE = RDBMS,
@@ -6,4 +7,5 @@ CREATE EXTERNAL DATA SOURCE [tk_vehicle]
     CREDENTIAL = [ElasticDBCred]
     );
 GO
+*/
 

@@ -1,3 +1,4 @@
+/* TODO FIX THIS
 CREATE EXTERNAL DATA SOURCE [Assetv1_Access]
     WITH (
     TYPE = RDBMS,
@@ -6,4 +7,5 @@ CREATE EXTERNAL DATA SOURCE [Assetv1_Access]
     CREDENTIAL = [Asset_EQuery]
     );
 GO
+*/
 

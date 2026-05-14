@@ -1,0 +1,51 @@
+trigger:
+  branches:
+    include:
+      - main
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  sqlServerName: 'asql-tkv2-eastus-dev.database.windows.net'
+  databaseName: 'Fleet'
+  projectPath: '**/*.sqlproj'
+
+steps:
+  - task: UseDotNet@2
+    displayName: 'Use .NET SDK'
+    inputs:
+      packageType: 'sdk'
+      version: '8.x'
+
+  - task: DotNetCoreCLI@2
+    displayName: 'Build database project'
+    inputs:
+      command: 'build'
+      projects: '$(projectPath)'
+      arguments: '--configuration Release'
+
+  - task: CopyFiles@2
+    displayName: 'Copy dacpac to artifact staging'
+    inputs:
+      contents: '**/bin/Release/*.dacpac'
+      targetFolder: '$(Build.ArtifactStagingDirectory)'
+      flattenFolders: true
+
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish dacpac as artifact'
+    inputs:
+      pathToPublish: '$(Build.ArtifactStagingDirectory)'
+      artifactName: 'dacpac'
+
+  - task: SqlAzureDacpacDeployment@1
+    displayName: 'Deploy dacpac to Azure SQL Dev'
+    inputs:
+      AuthenticationType: 'server'
+      ServerName: '$(sqlServerName)'
+      DatabaseName: '$(databaseName)'
+      SqlUsername: '$(sqlUser)'
+      SqlPassword: '$(sqlPassword)'
+      deployType: 'DacpacTask'
+      DeploymentAction: 'Publish'
+      DacpacFile: '$(Build.ArtifactStagingDirectory)/*.dacpac'

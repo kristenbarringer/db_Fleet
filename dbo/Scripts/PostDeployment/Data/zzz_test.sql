@@ -1,5 +1,5 @@
- /*
-
+print 'is this on';
+/*
 -- post-deploy data load 
 MERGE INTO dbo.zzz_test_pipeline_20260514_1707 AS target
 USING (VALUES

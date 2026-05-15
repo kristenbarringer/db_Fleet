@@ -1,27 +1,32 @@
-
--- post-deploy data load 
-MERGE INTO dbo.zzz_test_pipeline_20260514_1707 AS target
+MERGE INTO dbo.lookup_code AS target
 USING (VALUES
-    (1, 'Sedan', 'PassengerKLB_20260514_1759'),
-    (2, 'Truck', 'CommercialKLB_20260514_1759'),
-    (3, 'Van', 'CommercialKLB_20260514_1759'),
-    (4, 'Motorcycle', 'PassengerKLB_20260514_1759')
-) AS source (ID, desc1, desc2)
+    ('test_type', 'TEST01a', 'Sedan', 'PassengerKLB_20260514_1759', '', ''),
+    ('test_type', 'TEST01b', 'Truck', 'CommercialKLB_20260514_1759', '', ''),
+    ('test_type', 'TEST01c', 'Van', 'CommercialKLB_20260514_1759', '', ''),
+    ('test_type', 'TEST01d', 'Motorcycle', 'PassengerKLB_20260514_1759', '', '')
+) AS source ([lookup_type],[code],[short_desc],[long_desc],[notes],[custom_col1] )
 ON target.ID = source.ID
 
 WHEN MATCHED AND (
-        target.desc1 <> source.desc1
-     OR target.desc2 <> source.desc2
+        target.lookup_type <> source.lookup_type
+     OR target.code <> source.code
+     OR target.short_desc <> source.short_desc
+     OR target.long_desc <> source.long_desc
+     OR target.notes <> source.notes
+     OR target.custom_col1 <> source.custom_col1
     ) THEN
     UPDATE SET
-        target.desc1 = source.desc1,
-        target.desc2 = source.desc2
+        target.lookup_type = source.lookup_type,
+        target.code = source.code,
+        target.short_desc = source.short_desc,
+        target.long_desc = source.long_desc,
+        target.notes = source.notes,
+        target.custom_col1 = source.custom_col1
 
 WHEN NOT MATCHED BY TARGET THEN
-    INSERT (ID, desc1, desc2)
-    VALUES (source.ID, source.desc1, source.desc2)
+    INSERT ([lookup_type],[code],[short_desc],[long_desc],[notes],[custom_col1] )
+    VALUES (source.lookup_type, source.code, source.short_desc, source.long_desc, source.notes, source.custom_col1)
 
 WHEN NOT MATCHED BY SOURCE THEN
     DELETE
-
-; -- the trailing semicolon is REQUIRED on MERGE
+;

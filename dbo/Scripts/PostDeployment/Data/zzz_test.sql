@@ -5,19 +5,16 @@ USING (VALUES
     ('test_type', 'TEST01c', 'Van', 'CommercialKLB_20260514_1759', '', ''),
     ('test_type', 'TEST01d', 'Motorcycle', 'PassengerKLB_20260514_1759', '', '')
 ) AS source ([lookup_type],[code],[short_desc],[long_desc],[notes],[custom_col1] )
-ON target.ID = source.ID
+ON target.lookup_type = source.lookup_type
+and target.code = source.code
 
 WHEN MATCHED AND (
-        target.lookup_type <> source.lookup_type
-     OR target.code <> source.code
-     OR target.short_desc <> source.short_desc
+        target.short_desc <> source.short_desc
      OR target.long_desc <> source.long_desc
      OR target.notes <> source.notes
      OR target.custom_col1 <> source.custom_col1
     ) THEN
     UPDATE SET
-        target.lookup_type = source.lookup_type,
-        target.code = source.code,
         target.short_desc = source.short_desc,
         target.long_desc = source.long_desc,
         target.notes = source.notes,

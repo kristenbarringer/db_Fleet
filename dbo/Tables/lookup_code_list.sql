@@ -1,5 +1,5 @@
 CREATE TABLE [dbo].[lookup_code] (
-    [Id]        UNIQUEIDENTIFIER NOT NULL,
+    [Id]        UNIQUEIDENTIFIER NOT NULL DEFAULT NEWID(),
     [lookup_type]  VARCHAR (50)     NOT NULL,
     [code]         VARCHAR (50)     NOT NULL,
     [short_desc]   NVARCHAR (50)    NOT NULL,
@@ -30,6 +30,6 @@ ALTER TABLE [dbo].[lookup_code]
 GO
 
 ALTER TABLE [dbo].[lookup_code]
-    ADD CONSTRAINT [PK_lookup_code_list] PRIMARY KEY CLUSTERED ([Id] ASC);
+    ADD CONSTRAINT [PK_lookup_code] PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 

@@ -1,9 +1,9 @@
 MERGE INTO dbo.test_referring_tbl AS target
 USING (VALUES
-    ('1', 'TEST01a', 'TEST02a', 'TEST03a', ''),
-    ('2', 'TEST01b', 'TEST02b', 'TEST03b', ''),
-    ('3', 'TEST01c', 'TEST02c', 'TEST03c', ''),
-    ('4', 'TEST01d', 'TEST02d', 'TEST03d', '')
+    ('1', 'ATC_RAIL_CAR', 'AUS_FOOD_SHIPMENTS', 'COL_ORANGE', ''),
+    ('2', 'CTP_E_200', 'CTP_HMI_35', 'CTP_SR4_ST_TRUCK', ''),
+    ('3', 'CTP_UPIV_TIP', 'LIN_5', 'OLT_CZECH', ''),
+    ('4', 'OLT_NORWEGIAN', 'TMT_IBOX_MODE', 'TMT_TRACKING_IBOX', '')
 ) AS source (ID, test_type1_code, test_type2_code, test_type3_code, notes )
 ON target.ID = source.ID
 

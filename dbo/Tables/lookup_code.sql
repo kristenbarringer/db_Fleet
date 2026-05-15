@@ -4,13 +4,19 @@ drop table if exists [dbo].[lookup_code];
 */
 CREATE TABLE [dbo].[lookup_code] (
     [Id]        UNIQUEIDENTIFIER NOT NULL DEFAULT NEWID(),
-    [lookup_type]  VARCHAR (50)     NOT NULL,
-    [code]         VARCHAR (50)     NOT NULL,
-    [short_desc]   NVARCHAR (50)    NOT NULL,
-    [long_desc]    NVARCHAR (50)    NOT NULL,
-    [notes]        NVARCHAR (MAX)   NULL,
-    [former_code]    NVARCHAR (50)    NULL,
-    [custom_col1]  NVARCHAR (MAX)   NULL,
+    lookup_list_code   VARCHAR (50)    NOT NULL,
+    code_without_prefix_all_caps   NVARCHAR (50)    NOT NULL,
+    code_without_prefix_camel_case   NVARCHAR (50)    NOT NULL,
+    code_with_prefix   NVARCHAR (50)    NOT NULL,
+    short_desc   NVARCHAR (50)    NOT NULL,
+    long_desc   NVARCHAR (50)    NOT NULL,
+    notes   NVARCHAR (50)    NOT NULL,
+    custom_col1_desc   NVARCHAR (50)    NOT NULL,
+    custom_col1   NVARCHAR (50)    NOT NULL,
+    custom_col2_desc   NVARCHAR (50)    NOT NULL,
+    custom_col2   NVARCHAR (50)    NOT NULL,
+    former_code   NVARCHAR (50)    NOT NULL,
+    is_active   NVARCHAR (50)    NOT NULL,
     [created_date] DATETIME         NOT NULL,
     [created_by]   VARCHAR (50)     NOT NULL,
     [updated_date] DATETIME         NULL,
@@ -35,10 +41,10 @@ ALTER TABLE [dbo].[lookup_code]
 GO
 
 ALTER TABLE [dbo].[lookup_code]
-    ADD CONSTRAINT [PK_lookup_code] PRIMARY KEY CLUSTERED (code ASC);
+    ADD CONSTRAINT [PK_lookup_code] PRIMARY KEY CLUSTERED (code_with_prefix ASC);
 GO
 ALTER TABLE lookup_code
 ADD CONSTRAINT FK_lookup_code
-    FOREIGN KEY (lookup_type)
-    REFERENCES lookup_code_list(lookup_type_code);
+    FOREIGN KEY (lookup_list_code)
+    REFERENCES lookup_code_list(lookup_list_code);
 

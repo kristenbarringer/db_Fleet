@@ -9,14 +9,16 @@ select * from [dbo].[lookup_code_list];
 */
 CREATE TABLE [dbo].[lookup_code_list] (
     [Id]        UNIQUEIDENTIFIER NOT NULL DEFAULT NEWID(),
-    [lookup_type_code]  VARCHAR (50)     NOT NULL,
-    [short_desc]   NVARCHAR (50)    NOT NULL,
-    [long_desc]    NVARCHAR (50)    NOT    NULL,
+    [lookup_list_code]  VARCHAR (50)     NOT NULL,
+    [lookup_list_short_desc]   NVARCHAR (50)    NOT NULL,
+    [lookup_list_long_desc]    NVARCHAR (50)    NOT    NULL,
+    [lookup_list_abbrev]    NVARCHAR (50)    NOT    NULL,
     [notes]        NVARCHAR (MAX)   NULL,
-    [custom_col1]  NVARCHAR (MAX)   NULL,
+
     [former_table_db]    NVARCHAR (50)    NULL,
     [former_table_schema]    NVARCHAR (50)    NULL,
     [former_table_name]    NVARCHAR (50)  ,
+
     [created_date] DATETIME         NOT NULL,
     [created_by]   VARCHAR (50)     NOT NULL,
     [updated_date] DATETIME         NULL,
@@ -41,6 +43,6 @@ ALTER TABLE [dbo].[lookup_code_list]
 GO
 
 ALTER TABLE [dbo].[lookup_code_list]
-    ADD CONSTRAINT [PK_lookup_code_list_new] PRIMARY KEY CLUSTERED (lookup_type_code ASC);
+    ADD CONSTRAINT [PK_lookup_code_list_new] PRIMARY KEY CLUSTERED (lookup_list_code ASC);
 GO
 

@@ -2,7 +2,7 @@
 
 select * from [dbo].[lookup_code_list] where lookup_type_code = 'controller_model_type';
 select * from [dbo].[lookup_code] where lookup_type = 'controller_model_type';
-
+select * from controller 
 
 
 select * from [dbo].[test_referring_tbl] ;

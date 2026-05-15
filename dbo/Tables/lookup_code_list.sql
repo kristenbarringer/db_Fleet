@@ -14,19 +14,19 @@ CREATE TABLE [dbo].[lookup_code] (
 GO
 
 ALTER TABLE [dbo].[lookup_code]
-    ADD CONSTRAINT [DEFAULT_lookup_code_list_created_by] DEFAULT (suser_sname()) FOR [created_by];
+    ADD CONSTRAINT [DEFAULT_lookup_code_created_by] DEFAULT (suser_sname()) FOR [created_by];
 GO
 
 ALTER TABLE [dbo].[lookup_code]
-    ADD CONSTRAINT [DEFAULT_lookup_code_list_updated_by] DEFAULT (suser_sname()) FOR [updated_by];
+    ADD CONSTRAINT [DEFAULT_lookup_code_updated_by] DEFAULT (suser_sname()) FOR [updated_by];
 GO
 
 ALTER TABLE [dbo].[lookup_code]
-    ADD CONSTRAINT [DEFAULT_lookup_code_list_updated_date] DEFAULT (getutcdate()) FOR [updated_date];
+    ADD CONSTRAINT [DEFAULT_lookup_code_updated_date] DEFAULT (getutcdate()) FOR [updated_date];
 GO
 
 ALTER TABLE [dbo].[lookup_code]
-    ADD CONSTRAINT [DEFAULT_lookup_code_list_created_date] DEFAULT (getutcdate()) FOR [created_date];
+    ADD CONSTRAINT [DEFAULT_lookup_code_created_date] DEFAULT (getutcdate()) FOR [created_date];
 GO
 
 ALTER TABLE [dbo].[lookup_code]

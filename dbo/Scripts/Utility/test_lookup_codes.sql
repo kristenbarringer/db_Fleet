@@ -22,4 +22,8 @@ values ('4', 'TEST01dggg', 'TEST02dgggg', 'TEST03dgggg', '');
 
 update dbo.test_referring_tbl set test_type1_code = '89';
 
+select * from lookup_code lc
+inner join lookup_code_list ll on lc.lookup_list_code = ll.lookup_list_code 
+where lc.lookup_list_code like '%lang%' and short_desc like '%English%'
+
 */

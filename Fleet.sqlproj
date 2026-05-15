@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="dbo\Scripts\PostDeployment\PostDeployment.sql" />
+    <None Include="dbo\Scripts\Utility*" />
     <None Include="dbo\Scripts\PostDeployment\Data\zzz_test.sql" />
   </ItemGroup>
   <Target Name="BeforeBuild">

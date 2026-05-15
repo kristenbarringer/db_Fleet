@@ -3,6 +3,7 @@ AS
 BEGIN
    SET NOCOUNT ON;
    SET XACT_ABORT ON;
+   /* TODO FIX THIS
    DECLARE
        @Vehicle_rid INT,
        @NewData NVARCHAR(MAX),
@@ -122,6 +123,7 @@ BEGIN
    END
    CLOSE cur;
    DEALLOCATE cur;
+   */
 END;
-GO
+--GO
 

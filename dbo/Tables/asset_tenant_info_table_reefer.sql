@@ -8,7 +8,7 @@ CREATE TABLE [dbo].[asset_tenant_info_table_reefer] (
     [controller_rid]    INT            NULL,
     [device_rid]        INT            NULL,
     [tenant_id]         NVARCHAR (100) NULL,
-    [Pipeline_Id]       NVARCHAR (100) DEFAULT (NULL) NULL
+    [pipeline_Id]       NVARCHAR (100) DEFAULT (NULL) NULL
 );
 GO
 

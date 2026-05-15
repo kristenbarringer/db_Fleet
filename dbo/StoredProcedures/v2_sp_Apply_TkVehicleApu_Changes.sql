@@ -7,7 +7,7 @@ BEGIN
    SET XACT_ABORT ON;   
 
    BEGIN TRAN;
-
+/* TODO FIX THIS
        CREATE TABLE #AssetMap (Vehicle_rid INT PRIMARY KEY, Asset_rid INT);
        CREATE TABLE #EquipmentMap (Vehicle_rid INT PRIMARY KEY, Equipment_rid INT);
        CREATE TABLE #ControllerMap (Vehicle_rid INT PRIMARY KEY, Controller_rid INT);
@@ -420,11 +420,12 @@ BEGIN
        SET Processed = 1,
            ProcessedAt = SYSDATETIME()
        WHERE Processed = 0;
-
+*/
        COMMIT TRAN;
 
     /* Delete the processed or synched records alone */
     --DELETE FROM dbo.Vehicle_ChangeLog WHERE Processed=1;
 END;
-GO
+
+--GO
 

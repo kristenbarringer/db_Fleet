@@ -9,7 +9,7 @@ BEGIN
         a.asset_rid   AS assetId,
         a.asset_name  AS assetName,
         a.asset_uuid  AS assetUuid
-    FROM Asset a
+    FROM asset a
     INNER JOIN @AssetIds ids ON a.asset_rid = ids.id
     WHERE a.tenant_id = @tenantId
       AND a.active = 1

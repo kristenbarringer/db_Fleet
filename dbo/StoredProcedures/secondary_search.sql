@@ -23,7 +23,7 @@ DATEDIFF_BIG(MILLISECOND, '1970-01-01 00:00:00', d.warranty_end_date) as warrant
 h.description as telematicsMode,
 a.user_activation as userActivationDate
  into ss_test
-from asset a LEFT OUTER JOIN Asset_type b on a.asset_type_rid = b.asset_type_rid LEFT OUTER JOIN asset_group_mapping c on a.asset_rid=c.asset_rid 
+from asset a LEFT OUTER JOIN asset_type b on a.asset_type_rid = b.asset_type_rid LEFT OUTER JOIN asset_group_mapping c on a.asset_rid=c.asset_rid 
 LEFT OUTER JOIN equipment d on a.asset_rid = d.asset_rid LEFT OUTER join equipment_device_mapping e on d.equipment_rid = e.equipment_rid LEFT OUTER join device f on f.device_rid=e.device_rid
 left outer join billing_logging_interval g on f.logging_interval_rid_on=g.device_logging_interval_rid_on and f.logging_interval_rid_off=g.device_logging_interval_rid_off
 left outer join telematics_mode_type h on h.rid = f.telematics_mode_type_rid

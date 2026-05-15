@@ -3,7 +3,7 @@ AS
 BEGIN
 DECLARE @ColumnName NVARCHAR(128) = 'tenant_id'; -- Replace with your column name
 DECLARE @SQL NVARCHAR(MAX) = '';
-
+/* TODO FIX THIS
 SELECT @SQL = STRING_AGG(
     'UPDATE [' + TABLE_SCHEMA + '].[' + TABLE_NAME + '] ' +
     'SET [' + @ColumnName + '] = LOWER([' + @ColumnName + ']) ' +
@@ -22,6 +22,7 @@ ELSE
 BEGIN
     PRINT 'No tables found with the specified column.';
 END
+*/
 END
 GO
 

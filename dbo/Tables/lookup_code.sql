@@ -41,7 +41,7 @@ ALTER TABLE [dbo].[lookup_code]
 GO
 
 ALTER TABLE [dbo].[lookup_code]
-    ADD CONSTRAINT [PK_lookup_code] PRIMARY KEY CLUSTERED (code_with_prefix ASC);
+    ADD CONSTRAINT [PK_lookup_code] PRIMARY KEY CLUSTERED (code ASC);
 GO
 ALTER TABLE lookup_code
 ADD CONSTRAINT FK_lookup_code

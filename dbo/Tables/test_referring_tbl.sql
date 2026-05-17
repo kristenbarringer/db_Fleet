@@ -12,15 +12,15 @@ GO
 ALTER TABLE test_referring_tbl
 ADD CONSTRAINT FK_test_referring_tbl_test_type1
     FOREIGN KEY (test_type1_code)
-    REFERENCES lookup_code(code_with_prefix);
+    REFERENCES lookup_code(code);
 GO
 ALTER TABLE test_referring_tbl
 ADD CONSTRAINT FK_test_referring_tbl_test_type2
     FOREIGN KEY (test_type2_code)
-    REFERENCES lookup_code(code_with_prefix);
+    REFERENCES lookup_code(code);
 GO
 ALTER TABLE test_referring_tbl
 ADD CONSTRAINT FK_test_referring_tbl_test_type3
     FOREIGN KEY (test_type3_code)
-    REFERENCES lookup_code(code_with_prefix);
+    REFERENCES lookup_code(code);
  GO  

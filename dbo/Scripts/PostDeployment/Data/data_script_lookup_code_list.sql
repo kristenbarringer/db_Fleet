@@ -5,6 +5,7 @@ USING (VALUES
 ,('asset_activation_status','Asset Activation Status','Asset Activation Status','AAS','tk2_Assets','dbo','asset_activation_status')
 ,('asset_type','Asset Type','Asset Type','ATC','tk2_Assets','dbo','asset_type')
 ,('asset_usage','Asset Usage','Asset Usage','AUS','tk2_Assets','dbo','asset_usage')
+,('billing_service_level','Billing Service Level','Billing Service Level','BSL','tk2_Assets','dbo','billing_service_level')
 ,('colour','Colour','Colour','COL','tk2_Assets','dbo','colour')
 ,('controller_model_type','Controller Model Type','Controller Model Type','CMT','tk2_Assets','dbo','controller_model_type')
 ,('controller_type','Controller Type','Controller Type','CTP','tk2_Assets','dbo','controller_type')
@@ -16,6 +17,7 @@ USING (VALUES
 ,('language_accounts','Language','Language','LNGAC','tk2_Accounts','dbo','language')
 ,('logging_interval','Logging Interval','Logging Interval','LIN','tk2_Assets','dbo','logging_interval')
 ,('optiset_language_type','Optiset Language Type','Optiset Language Type','OLT','tk2_Assets','dbo','optiset_language_type')
+,('power_source','Power Source','Power Source','PWS','tk2_Assets','dbo','power_source')
 ,('telematics_mode_type','Telematics Mode Type','Telematics Mode Type','TMT','tk2_Assets','dbo','telematics_mode_type')
 
 -- tk2_Accounts

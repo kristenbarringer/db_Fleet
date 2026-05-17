@@ -19,6 +19,20 @@ USING (VALUES
 ,('asset_usage','MEAT_AND_SEAFOOD','meatAndSeafood','AUS_MEAT_AND_SEAFOOD','Meat and Seafood','Meat and Seafood','','','','','','4','1')
 ,('asset_usage','OTHER','other','AUS_OTHER','Other','Other','','','','','','7','1')
 ,('asset_usage','VACCINES_AND_MEDICATIONS','vaccinesAndMedications','AUS_VACCINES_AND_MEDICATIONS','Vaccines and medications','Vaccines and medications','','','','','','6','1')
+
+,('billing_service_level','ONE_WAY_COMM','oneWayComm','BSL_ONE_WAY_COMM','1-way comm','1-way comm','','','','','','1','1')
+,('billing_service_level','TWO_WAY_COMM','twoWayComm','BSL_TWO_WAY_COMM','2-way comm','2-way comm','','','','','','2','1')
+,('billing_service_level','ONE_WAY_COMM_DD','oneWayCommDD','BSL_ONE_WAY_COMM_DD','1-way comm & Datalogger Download','1-way comm & Datalogger Download','','','','','','3','1')
+,('billing_service_level','TWO_WAY_COMM_DD','twoWayCommDD','BSL_TWO_WAY_COMM_DD','2-way comm & Datalogger Download','2-way comm & Datalogger Download','','','','','','4','1')
+,('billing_service_level','TWO_WAY_COMM_ROC','twoWayCommROC','BSL_TWO_WAY_COMM_ROC','2-way comm & Remote Operating Center','2-way comm & Remote Operating Center','','','','','','5','1')
+,('billing_service_level','TWO_WAY_COMM_TP','twoWayCommTp','BSL_TWO_WAY_COMM_TP','2-way comm & TracKing Pro','2-way comm & TracKing Pro','','','','','','6','1')
+
+
+,('power_source','ELECTRIC','electric','PWS_ELECTRIC','Electric','Electric','','','','','','1','1')
+,('power_source','DIESEL','diesel','PWS_DIESEL','Diesel','Diesel','','','','','','2','1')
+ 
+
+
 ,('controller_model_type','ADVANCER_S_DRC','advancerSDrc','CMT_ADVANCER_S_DRC','Advancer S-DRC','Advancer S-DRC','','','','','','1262','1')
 ,('controller_model_type','E1000_E1000M','e1000E1000m','CMT_E1000_E1000M','e1000 / e1000M','e1000 / e1000M','','','','','','1261','1')
 ,('controller_model_type','S_750I','s750i','CMT_S_750I','S-750i','S-750i','','','','','','1260','1')

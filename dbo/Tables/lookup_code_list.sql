@@ -8,7 +8,7 @@ select * from [dbo].[lookup_code];
 select * from [dbo].[lookup_code_list];
 */
 CREATE TABLE [dbo].[lookup_code_list] (
-    [Id]        UNIQUEIDENTIFIER NOT NULL DEFAULT NEWID(),
+   -- [Id]        UNIQUEIDENTIFIER NOT NULL DEFAULT NEWID(),
     [lookup_list_code]  VARCHAR (50)     NOT NULL,
     [lookup_list_short_desc]   NVARCHAR (50)    NOT NULL,
     [lookup_list_long_desc]    NVARCHAR (50)    NOT    NULL,

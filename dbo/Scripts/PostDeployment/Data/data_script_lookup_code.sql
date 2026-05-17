@@ -218,15 +218,14 @@ USING (VALUES
 ,('fuel_type','US_GALLONS',        'usGallons',     'FLT_US_GALLONS',       'U.S. Gallons','U.S. Gallons','','','','','','3','1')
 
 
-) AS source (lookup_list_code,code_without_prefix_all_caps,code_without_prefix_camel_case,code_with_prefix,short_desc,long_desc,notes,custom_col1_desc,custom_col1,custom_col2_desc,custom_col2,former_code,is_active)
+) AS source (lookup_list_code,code_without_prefix_all_caps,code_without_prefix_camel_case,code,short_desc,long_desc,notes,custom_col1_desc,custom_col1,custom_col2_desc,custom_col2,former_code,is_active)
 
-ON target.code_with_prefix = source.code_with_prefix
+ON target.code = source.code
 
 WHEN MATCHED AND (   
         target.lookup_list_code <> source.lookup_list_code
      OR target.code_without_prefix_all_caps <> source.code_without_prefix_all_caps
      OR target.code_without_prefix_camel_case <> source.code_without_prefix_camel_case
-     OR target.code_with_prefix <> source.code_with_prefix
      OR target.short_desc <> source.short_desc
      OR target.long_desc <> source.long_desc
      OR target.notes <> source.notes
@@ -241,7 +240,6 @@ WHEN MATCHED AND (
         target.lookup_list_code = source.lookup_list_code,
         target.code_without_prefix_all_caps = source.code_without_prefix_all_caps,
         target.code_without_prefix_camel_case = source.code_without_prefix_camel_case,
-        target.code_with_prefix = source.code_with_prefix,
         target.short_desc = source.short_desc,
         target.long_desc = source.long_desc,
         target.notes = source.notes,
@@ -253,8 +251,8 @@ WHEN MATCHED AND (
         target.is_active = source.is_active
 
 WHEN NOT MATCHED BY TARGET THEN
-    INSERT (lookup_list_code,code_without_prefix_all_caps,code_without_prefix_camel_case,code_with_prefix,short_desc,long_desc,notes,custom_col1_desc,custom_col1,custom_col2_desc,custom_col2,former_code,is_active)
-    VALUES (source.lookup_list_code,source.code_without_prefix_all_caps,source.code_without_prefix_camel_case,source.code_with_prefix,source.short_desc,source.long_desc,source.notes,source.custom_col1_desc,source.custom_col1,source.custom_col2_desc,source.custom_col2,source.former_code,source.is_active)
+    INSERT (lookup_list_code,code_without_prefix_all_caps,code_without_prefix_camel_case,code,short_desc,long_desc,notes,custom_col1_desc,custom_col1,custom_col2_desc,custom_col2,former_code,is_active)
+    VALUES (source.lookup_list_code,source.code_without_prefix_all_caps,source.code_without_prefix_camel_case,source.code,source.short_desc,source.long_desc,source.notes,source.custom_col1_desc,source.custom_col1,source.custom_col2_desc,source.custom_col2,source.former_code,source.is_active)
 
 WHEN NOT MATCHED BY SOURCE THEN
     DELETE

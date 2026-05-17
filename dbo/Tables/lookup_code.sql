@@ -3,11 +3,11 @@ drop table if exists [dbo].[test_referring_tbl] ;
 drop table if exists [dbo].[lookup_code];
 */
 CREATE TABLE [dbo].[lookup_code] (
-    [Id]        UNIQUEIDENTIFIER NOT NULL DEFAULT NEWID(),
+   -- [Id]        UNIQUEIDENTIFIER NOT NULL DEFAULT NEWID(),
+    code   NVARCHAR (50)    NOT NULL, -- code_with_prefix (PRIMARY KEY)
     lookup_list_code   VARCHAR (50)    NOT NULL,
     code_without_prefix_all_caps   NVARCHAR (50)    NOT NULL,
     code_without_prefix_camel_case   NVARCHAR (50)    NOT NULL,
-    code_with_prefix   NVARCHAR (50)    NOT NULL,
     short_desc   NVARCHAR (50)    NOT NULL,
     long_desc   NVARCHAR (50)    NOT NULL,
     notes   NVARCHAR (50)    NOT NULL,

@@ -27,11 +27,8 @@ USING (VALUES
 ,('billing_service_level','TWO_WAY_COMM_ROC','twoWayCommROC','BSL_TWO_WAY_COMM_ROC','2-way comm & Remote Operating Center','2-way comm & Remote Operating Center','','','','','','5','1')
 ,('billing_service_level','TWO_WAY_COMM_TP','twoWayCommTp','BSL_TWO_WAY_COMM_TP','2-way comm & TracKing Pro','2-way comm & TracKing Pro','','','','','','6','1')
 
-
 ,('power_source','ELECTRIC','electric','PWS_ELECTRIC','Electric','Electric','','','','','','1','1')
 ,('power_source','DIESEL','diesel','PWS_DIESEL','Diesel','Diesel','','','','','','2','1')
- 
-
 
 ,('controller_model_type','ADVANCER_S_DRC','advancerSDrc','CMT_ADVANCER_S_DRC','Advancer S-DRC','Advancer S-DRC','','','','','','1262','1')
 ,('controller_model_type','E1000_E1000M','e1000E1000m','CMT_E1000_E1000M','e1000 / e1000M','e1000 / e1000M','','','','','','1261','1')

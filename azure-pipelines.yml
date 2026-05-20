@@ -55,7 +55,11 @@ steps:
       targetType: 'inline'
       script: |
         dotnet tool install -g Microsoft.SqlPackage
-        $dacpac = Get-ChildItem -Path "$(Pipeline.Workspace)/shared" -Filter *.dacpac -Recurse | Select-Object -First 1
+        $dacpac = Get-ChildItem -Path "$(Build.SourcesDirectory)/references" -Filter Shared.dacpac -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1
+        if (-not $dacpac) {
+            Write-Error "Shared.dacpac not found in $(Build.SourcesDirectory)/references"
+            exit 1
+            }
         Write-Host "Deploying shared dacpac: $($dacpac.FullName)"
         SqlPackage /Action:Publish `
           /SourceFile:"$($dacpac.FullName)" `

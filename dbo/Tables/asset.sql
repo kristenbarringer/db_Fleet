@@ -9,6 +9,7 @@ CREATE TABLE [dbo].[asset] (
     [model]                     VARCHAR (255)  NULL,
     [year]                      INT            NULL,
     [asset_type_rid]            INT            NOT NULL,
+    [asset_type_code]           NVARCHAR (50)  NOT NULL,
     [created_by_user_rid]       INT            NOT NULL,
     [vin]                       VARCHAR (255)  NULL,
     [updated]                   DATETIME       NULL,
@@ -70,3 +71,6 @@ ALTER TABLE [dbo].[asset]
     ADD CONSTRAINT [idx_assetPK] PRIMARY KEY CLUSTERED ([asset_rid] ASC) WITH (FILLFACTOR = 100, DATA_COMPRESSION = PAGE);
 GO
 
+ALTER TABLE [dbo].[asset]
+    ADD CONSTRAINT [FK_asset_asset_type_code] FOREIGN KEY ([asset_type_code]) REFERENCES [dbo].[lookup_code] ([code]);
+GO

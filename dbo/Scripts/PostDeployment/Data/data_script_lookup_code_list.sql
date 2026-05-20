@@ -1,3 +1,5 @@
+
+/* TODO DELETE THIS
 MERGE INTO dbo.lookup_code_list AS target
 USING (VALUES
 -- tk2_Assets
@@ -50,3 +52,4 @@ WHEN NOT MATCHED BY TARGET THEN
 WHEN NOT MATCHED BY SOURCE THEN
     DELETE
 ;
+*/

@@ -1,3 +1,4 @@
+
 /*
 drop table if exists [dbo].[test_referring_tbl];
 drop table if exists [dbo].[lookup_code];
@@ -7,6 +8,8 @@ select * from [dbo].[test_referring_tbl];
 select * from [dbo].[lookup_code];
 select * from [dbo].[lookup_code_list];
 */
+
+/* TODO DELETE THIS
 CREATE TABLE [dbo].[lookup_code_list] (
    -- [Id]        UNIQUEIDENTIFIER NOT NULL DEFAULT NEWID(),
     [lookup_list_code]  VARCHAR (50)     NOT NULL,
@@ -24,8 +27,8 @@ CREATE TABLE [dbo].[lookup_code_list] (
     [updated_date] DATETIME         NULL,
     [updated_by]   VARCHAR (50)     NULL
 );
-GO
-
+GO*/
+/*
 ALTER TABLE [dbo].[lookup_code_list]
     ADD CONSTRAINT [DEFAULT_lookup_code_list_new_created_by] DEFAULT (suser_sname()) FOR [created_by];
 GO
@@ -43,6 +46,6 @@ ALTER TABLE [dbo].[lookup_code_list]
 GO
 
 ALTER TABLE [dbo].[lookup_code_list]
-    ADD CONSTRAINT [PK_lookup_code_list_new] PRIMARY KEY CLUSTERED (lookup_list_code ASC);
-GO
+    ADD CONSTRAINT [PK_lookup_code_list_newfleet] PRIMARY KEY CLUSTERED (lookup_list_code ASC);
+GO*/
 

@@ -2,6 +2,7 @@
 drop table if exists [dbo].[test_referring_tbl] ;
 drop table if exists [dbo].[lookup_code];
 */
+/* TODO DELETE THIS
 CREATE TABLE [dbo].[lookup_code] (
    -- [Id]        UNIQUEIDENTIFIER NOT NULL DEFAULT NEWID(),
     code   NVARCHAR (50)    NOT NULL, -- code_with_prefix (PRIMARY KEY)
@@ -48,3 +49,4 @@ ADD CONSTRAINT FK_lookup_code
     FOREIGN KEY (lookup_list_code)
     REFERENCES lookup_code_list(lookup_list_code);
 
+*/

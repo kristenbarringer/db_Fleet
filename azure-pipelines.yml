@@ -39,6 +39,31 @@ steps:
       pathToPublish: '$(Build.ArtifactStagingDirectory)'
       artifactName: 'dacpac'
 
+- task: DownloadPipelineArtifact@2
+    displayName: 'Download Shared dacpac'
+    inputs:
+      buildType: 'specific'
+      project: 'TKATelematics'
+      definition: 'db_Shared'
+      buildVersionToDownload: 'latest'
+      artifactName: 'shared-dacpac'
+      targetPath: '$(Pipeline.Workspace)/shared'
+
+  - task: PowerShell@2
+    displayName: 'Deploy Shared dacpac to Azure SQL Dev'
+    inputs:
+      targetType: 'inline'
+      script: |
+        dotnet tool install -g Microsoft.SqlPackage
+        $dacpac = Get-ChildItem -Path "$(Pipeline.Workspace)/shared" -Filter *.dacpac -Recurse | Select-Object -First 1
+        Write-Host "Deploying shared dacpac: $($dacpac.FullName)"
+        SqlPackage /Action:Publish `
+          /SourceFile:"$($dacpac.FullName)" `
+          /TargetServerName:"$(sqlServerName)" `
+          /TargetDatabaseName:"$(databaseName)" `
+          /TargetUser:"$(sqlUser)" `
+          /TargetPassword:"$(sqlPassword)"
+
   - task: PowerShell@2
     displayName: 'Deploy dacpac to Azure SQL Dev'
     inputs:

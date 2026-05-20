@@ -11,16 +11,14 @@
     <None Include=".vscode\tasks.json" />
   </ItemGroup>
   <ItemGroup>
-    <PostDeploy Include="dbo\Scripts\PostDeployment\PostDeployment.sql" />
     <None Include="dbo\Scripts\Utility*" />
-    <None Include="dbo\Scripts\PostDeployment\Data\zzz_test.sql" />
   </ItemGroup>
   <ItemGroup>
     <ArtifactReference Include="references\Shared.dacpac">
-		<HintPath>references\Shared.dacpac</HintPath>
-		<SuppressMissingDependenciesErrors>False</SuppressMissingDependenciesErrors>
-		<SameDatabase>True</SameDatabase>
-	</ArtifactReference>
+      <HintPath>references\Shared.dacpac</HintPath>
+      <SuppressMissingDependenciesErrors>False</SuppressMissingDependenciesErrors>
+      <SameDatabase>True</SameDatabase>
+    </ArtifactReference>
   </ItemGroup>
   <Target Name="BeforeBuild">
     <Delete Files="$(BaseIntermediateOutputPath)\project.assets.json" />

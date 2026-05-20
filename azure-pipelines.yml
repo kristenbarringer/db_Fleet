@@ -19,6 +19,16 @@ steps:
       packageType: 'sdk'
       version: '8.x'
 
+  - task: DownloadPipelineArtifact@2
+    displayName: 'Download Shared dacpac'
+    inputs:
+      buildType: 'specific'
+      project: 'TKATelematics'
+      definition: 'db_Shared'
+      buildVersionToDownload: 'latest'
+      artifactName: 'shared-dacpac'
+      targetPath: '$(Pipeline.Workspace)/shared'
+      
   - task: DotNetCoreCLI@2
     displayName: 'Build database project'
     inputs:
@@ -38,16 +48,6 @@ steps:
     inputs:
       pathToPublish: '$(Build.ArtifactStagingDirectory)'
       artifactName: 'dacpac'
-
-  - task: DownloadPipelineArtifact@2
-    displayName: 'Download Shared dacpac'
-    inputs:
-      buildType: 'specific'
-      project: 'TKATelematics'
-      definition: 'db_Shared'
-      buildVersionToDownload: 'latest'
-      artifactName: 'shared-dacpac'
-      targetPath: '$(Pipeline.Workspace)/shared'
 
   - task: PowerShell@2
     displayName: 'Deploy Shared dacpac to Azure SQL Dev'

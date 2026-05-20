@@ -27,7 +27,7 @@ steps:
       definition: 'db_Shared'
       buildVersionToDownload: 'latest'
       artifactName: 'shared-dacpac'
-      targetPath: '$(Pipeline.Workspace)/shared'
+      targetPath: '$(Build.SourcesDirectory)/references'
       
   - task: DotNetCoreCLI@2
     displayName: 'Build database project'

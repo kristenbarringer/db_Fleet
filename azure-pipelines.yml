@@ -39,7 +39,7 @@ steps:
       pathToPublish: '$(Build.ArtifactStagingDirectory)'
       artifactName: 'dacpac'
 
-- task: DownloadPipelineArtifact@2
+  - task: DownloadPipelineArtifact@2
     displayName: 'Download Shared dacpac'
     inputs:
       buildType: 'specific'

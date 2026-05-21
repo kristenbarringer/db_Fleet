@@ -5,7 +5,8 @@ CREATE TABLE [dbo].[asset]
     [asset_rid] INT IDENTITY (1, 1) NOT NULL,
     -- TODO asset_rid MIGHT BE DEPRECATED or renamed to legacy_asset_rid
     [tenant_id] NVARCHAR (50) CONSTRAINT [df_asset_tenant_id] DEFAULT (1) NOT NULL,
-    [name] VARCHAR    (255) NULL,
+    [asset_name] VARCHAR    (255) NULL,
+    -- TODO rename asset_name to name but caused error in sys.sp_refreshsqlmodule_internal
     [description] NVARCHAR    (300) CONSTRAINT [df_asset_description] DEFAULT    ('TrackingV1Asset') NULL,
     [make] VARCHAR    (255) NULL,
     [model] VARCHAR    (255) NULL,

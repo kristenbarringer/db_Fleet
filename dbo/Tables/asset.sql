@@ -9,7 +9,7 @@ CREATE TABLE [dbo].[asset] (
     [model]                     VARCHAR (255)  NULL,
     [year]                      INT            NULL,
     [asset_type_rid]            INT            NOT NULL,
-    [asset_type_code]           NVARCHAR (50)  NOT NULL,
+    [asset_type_code]           VARCHAR (30)   NOT NULL,
     [created_by_user_rid]       INT            NOT NULL,
     [vin]                       VARCHAR (255)  NULL,
     [updated]                   DATETIME       NULL,

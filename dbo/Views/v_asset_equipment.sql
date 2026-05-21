@@ -1,8 +1,9 @@
 CREATE VIEW dbo.v_asset_equipment
 AS
-SELECT ROW_NUMBER() OVER (ORDER BY a.asset_rid) AS id, e.id AS equipment_uuid, a.tenant_id, a.asset_uuid, a.asset_rid, a.active, e.equipment_rid, e.equipment_serial_number
-FROM     asset a, equipment e
-WHERE  a.asset_rid = e.asset_rid
+   SELECT ROW_NUMBER() OVER (ORDER BY a.asset_rid) AS id, e.id AS equipment_uuid, a.tenant_id, a.asset_uuid, a.asset_rid,
+      a.is_active, e.equipment_rid, e.equipment_serial_number
+   FROM asset a, equipment e
+   WHERE  a.asset_rid = e.asset_rid
 GO
 
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane1', @value = N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]

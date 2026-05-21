@@ -1,14 +1,15 @@
-CREATE TABLE [dbo].[controller] (
-    [controller_rid]              INT           IDENTITY (1, 1) NOT NULL,
-    [controller_name]             NVARCHAR (50) NOT NULL,
-    [controller_type_rid]         INT           NOT NULL,
-    [created]                     DATETIME      NOT NULL,
-    [tenant_id]                   NVARCHAR (50) NOT NULL,
-    [equipment_rid]               INT           NOT NULL,
-    [controller_serial_number]    NVARCHAR (50) NULL,
+CREATE TABLE [dbo].[controller]
+(
+    [controller_rid] INT IDENTITY (1, 1) NOT NULL,
+    [controller_name] NVARCHAR (50) NOT NULL,
+    [controller_type_code] VARCHAR(30) NOT NULL,
+    [created] DATETIME NOT NULL,
+    [tenant_id] NVARCHAR (50) NOT NULL,
+    [equipment_rid] INT NOT NULL,
+    [controller_serial_number] NVARCHAR (50) NULL,
     [controller_software_version] NVARCHAR (50) NULL,
-    [updated]                     DATETIME      NULL,
-    [auto_update_sent]            BIT           NULL
+    [updated] DATETIME NULL,
+    [auto_update_sent] BIT NULL
 );
 GO
 
@@ -21,7 +22,7 @@ ALTER TABLE [dbo].[controller]
 GO
 
 ALTER TABLE [dbo].[controller]
-    ADD CONSTRAINT [DF_controller_type_v1migration] DEFAULT ((1)) FOR [controller_type_rid];
+    ADD CONSTRAINT [df_controller_controller_type_code] DEFAULT (('CTL_UPIV')) FOR [controller_type_code];
 GO
 
 ALTER TABLE [dbo].[controller]
@@ -29,7 +30,7 @@ ALTER TABLE [dbo].[controller]
 GO
 
 ALTER TABLE [dbo].[controller]
-    ADD CONSTRAINT [FK_controller_controller_type] FOREIGN KEY ([controller_type_rid]) REFERENCES [dbo].[controller_type] ([controller_type_rid]);
+    ADD CONSTRAINT [fk_controller_controller_type_code] FOREIGN KEY ([controller_type_code]) REFERENCES [dbo].[lookup_code] ([code]);
 GO
 
 ALTER TABLE [dbo].[controller]

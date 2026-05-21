@@ -1,6 +1,8 @@
 create procedure spr_asset_json
-as 
+as
 begin
+    print 'TODO FIX THIS'
+/* TODO FIX THIS
 select a.asset_rid,a.asset_name,a.asset_uuid,b.asset_type_name,
 STRING_AGG(c.asset_group_rid,',') as asset_group_rid,CASE WHEN d.equipment_type_rid = 1 then 'APU'
 WHEN  d.equipment_type_rid = 2 then 'Reefer' 
@@ -29,6 +31,7 @@ LEFT OUTER join device f on f.device_rid=e.device_rid
 left outer join billing_logging_interval g on f.logging_interval_rid_on=g.device_logging_interval_rid_on and f.logging_interval_rid_off=g.device_logging_interval_rid_off
 left outer join telematics_mode_type h on h.rid = f.telematics_mode_type_rid
 group by a.asset_rid,a.asset_name,a.asset_uuid,b.asset_type_name,d.equipment_type_rid,a.billing_service_level_rid,g.logging_interval_description,warranty_start_date,warranty_end_date,h.description,a.user_activation,a.activation_status_rid
+*/
 end
 GO
 

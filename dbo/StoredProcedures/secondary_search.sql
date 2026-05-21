@@ -1,6 +1,8 @@
 create procedure secondary_search
 as
 begin
+    print 'TODO FIX THIS'
+/* TODO FIX THIS
 Drop table if exists ss_test
 select  a.asset_rid as assetId,a.asset_name as assetName,a.asset_uuid as assetUuid,a.tenant_id as tenantId,b.asset_type_name as assetType,
 STRING_AGG(c.asset_group_rid,',') as assetGroupIds,CASE WHEN d.equipment_type_rid = 1 then 'APU'
@@ -29,7 +31,7 @@ left outer join billing_logging_interval g on f.logging_interval_rid_on=g.device
 left outer join telematics_mode_type h on h.rid = f.telematics_mode_type_rid
 where  a.tenant_id = 'E6E012E2-932B-41E1-BC40-0A302955CD3D' and d.visibility=1 and a.active = 1
 group by a.asset_rid,a.asset_name,a.asset_uuid,b.asset_type_name,d.equipment_type_rid,a.billing_service_level_rid,g.logging_interval_description,warranty_start_date,warranty_end_date,h.description,a.user_activation,a.activation_status_rid,a.tenant_id,f.device_serial_number
-
+*/
 end
 GO
 

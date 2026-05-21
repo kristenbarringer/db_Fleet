@@ -1,37 +1,37 @@
-CREATE TABLE [dbo].[asset] (
-    [asset_rid]                 INT            IDENTITY (1, 1) NOT NULL,
-    [asset_name]                VARCHAR (255)  NULL,
-    [description]               NVARCHAR (300) NULL,
-    [created]                   DATETIME       NOT NULL,
-    [tenant_id]                 NVARCHAR (50)  NOT NULL,
-    [active]                    BIT            NOT NULL,
-    [make]                      VARCHAR (255)  NULL,
-    [model]                     VARCHAR (255)  NULL,
-    [year]                      INT            NULL,
-    [asset_type_rid]            INT            NOT NULL,
-    [asset_type_code]           VARCHAR (30)   NOT NULL,
-    [created_by_user_rid]       INT            NOT NULL,
-    [vin]                       VARCHAR (255)  NULL,
-    [updated]                   DATETIME       NULL,
-    [power_source_rid]          INT            NULL,
-    [asset_uuid]                NVARCHAR (50)  DEFAULT ('3924d614-c329-43f4-8166-a6f1a9831c91') NOT NULL,
-    [asset_icon_rid]            INT            NULL,
-    [asset_usage_rid]           INT            NULL,
-    [activation_status_rid]     INT            DEFAULT ((2)) NOT NULL,
-    [billing_service_level_rid] INT            NULL,
-    [activated]                 DATETIME       NULL,
-    [user_activation]           DATETIME2 (6)  NULL,
-    [door_sensor_1]             BIT            NULL,
-    [door_sensor_2]             BIT            NULL,
-    [lock]                      BIT            NULL,
-    [cargowatch_download]       BIT            NULL,
-    [servicewatch_download]     BIT            NULL,
-    [fuel_tank_size]            FLOAT (53)     NULL,
-    [notes]                     VARCHAR (255)  NULL,
-    [additional_notes]          VARCHAR (255)  NULL,
-    [door_sensor_3]             BIT            NULL,
-    [replacement_date]          DATETIME       NULL,
-    [account_additional_notes]  VARCHAR (255)  NULL
+CREATE TABLE [dbo].[asset]
+(
+    [asset_rid] INT IDENTITY (1, 1) NOT NULL,
+    [asset_name] VARCHAR (255) NULL,
+    [description] NVARCHAR (300) NULL,
+    [created] DATETIME NOT NULL,
+    [tenant_id] NVARCHAR (50) NOT NULL,
+    [is_active] BIT NOT NULL,
+    [make] VARCHAR (255) NULL,
+    [model] VARCHAR (255) NULL,
+    [year] INT NULL,
+    [asset_type_code] VARCHAR (30) NOT NULL,
+    [created_by_user_rid] INT NOT NULL,
+    [vin] VARCHAR (255) NULL,
+    [updated] DATETIME NULL,
+    [power_source_code] VARCHAR (30) NULL,
+    [asset_uuid] NVARCHAR (50) DEFAULT ('3924d614-c329-43f4-8166-a6f1a9831c91') NOT NULL,
+    [asset_icon_code] VARCHAR (30) NULL,
+    [asset_usage_code] VARCHAR (30) NULL,
+    [activation_status_code] VARCHAR (30) DEFAULT (('AAS_ACTIVATED')) NOT NULL,
+    [billing_service_level_code] VARCHAR (30) NULL,
+    [activated] DATETIME NULL,
+    [user_activation] DATETIME2 (6) NULL,
+    [door_sensor_1] BIT NULL,
+    [door_sensor_2] BIT NULL,
+    [lock] BIT NULL,
+    [cargowatch_download] BIT NULL,
+    [servicewatch_download] BIT NULL,
+    [fuel_tank_size] FLOAT (53) NULL,
+    [notes] VARCHAR (255) NULL,
+    [additional_notes] VARCHAR (255) NULL,
+    [door_sensor_3] BIT NULL,
+    [replacement_date] DATETIME NULL,
+    [account_additional_notes] VARCHAR (255) NULL
 );
 GO
 
@@ -44,7 +44,7 @@ ALTER TABLE [dbo].[asset]
 GO
 
 ALTER TABLE [dbo].[asset]
-    ADD CONSTRAINT [DF_asset_type_v1migration] DEFAULT ((3)) FOR [asset_type_rid];
+    ADD CONSTRAINT [df_asset_asset_type_code] DEFAULT (('AST_TRUCK')) FOR [asset_type_code];
 GO
 
 ALTER TABLE [dbo].[asset]
@@ -56,15 +56,15 @@ ALTER TABLE [dbo].[asset]
 GO
 
 ALTER TABLE [dbo].[asset]
-    ADD CONSTRAINT [FK_asset_activation_status] FOREIGN KEY ([activation_status_rid]) REFERENCES [dbo].[asset_activation_status] ([rid]);
+    ADD CONSTRAINT [FK_asset_activation_status] FOREIGN KEY ([activation_status_code]) REFERENCES [dbo].[lookup_code] ([code]);
 GO
 
 ALTER TABLE [dbo].[asset]
-    ADD CONSTRAINT [FK_asset_asset_type] FOREIGN KEY ([asset_type_rid]) REFERENCES [dbo].[asset_type] ([asset_type_rid]);
+    ADD CONSTRAINT [FK_asset_asset_type] FOREIGN KEY ([asset_type_code]) REFERENCES [dbo].[lookup_code] ([code]);
 GO
 
 ALTER TABLE [dbo].[asset]
-    ADD CONSTRAINT [FK_asset_asset_usage_rid] FOREIGN KEY ([asset_usage_rid]) REFERENCES [dbo].[asset_usage] ([asset_usage_rid]);
+    ADD CONSTRAINT [FK_asset_asset_usage_rid] FOREIGN KEY ([asset_usage_code]) REFERENCES [dbo].[lookup_code] ([code]);
 GO
 
 ALTER TABLE [dbo].[asset]

@@ -1,29 +1,30 @@
-CREATE TABLE [dbo].[geo_fence] (
-    [geo_fence_rid]     INT             IDENTITY (1, 1) NOT NULL,
-    [description]       NVARCHAR (60)   NULL,
-    [tenant_id]         INT             NULL,
-    [co_ord_1_x]        DECIMAL (9, 6)  NULL,
-    [co_ord_1_y]        DECIMAL (9, 6)  NULL,
-    [co_ord_2_x]        DECIMAL (9, 6)  NULL,
-    [co_ord_2_y]        DECIMAL (9, 6)  NULL,
-    [co_ord_3_x]        DECIMAL (9, 6)  NULL,
-    [co_ord_3_y]        DECIMAL (9, 6)  NULL,
-    [co_ord_4_x]        DECIMAL (9, 6)  NULL,
-    [co_ord_4_y]        DECIMAL (9, 6)  NULL,
-    [created]           DATETIME        NULL,
-    [colour_rid]        INT             NULL,
-    [active_flag]       BIT             NULL,
-    [boundary_long_1]   DECIMAL (11, 8) NULL,
-    [boundary_lat_1]    DECIMAL (11, 8) NULL,
-    [boundary_long_2]   DECIMAL (11, 8) NULL,
-    [boundary_lat_2]    DECIMAL (11, 8) NULL,
-    [noise_reduction]   BIT             NULL,
-    [work_schedule_rid] INT             NULL,
-    [total_points]      INT             NULL,
-    [radius]            DECIMAL (9, 6)  NULL,
-    [co_ordinates]      VARCHAR (MAX)   NULL,
-    [is_created]        BIT             NULL,
-    [is_updated]        BIT             NULL
+CREATE TABLE [dbo].[geo_fence]
+(
+    [geo_fence_rid] INT IDENTITY (1, 1) NOT NULL,
+    [description] NVARCHAR (60) NULL,
+    [tenant_id] INT NULL,
+    [co_ord_1_x] DECIMAL (9, 6) NULL,
+    [co_ord_1_y] DECIMAL (9, 6) NULL,
+    [co_ord_2_x] DECIMAL (9, 6) NULL,
+    [co_ord_2_y] DECIMAL (9, 6) NULL,
+    [co_ord_3_x] DECIMAL (9, 6) NULL,
+    [co_ord_3_y] DECIMAL (9, 6) NULL,
+    [co_ord_4_x] DECIMAL (9, 6) NULL,
+    [co_ord_4_y] DECIMAL (9, 6) NULL,
+    [created] DATETIME NULL,
+    [colour_code] VARCHAR(30) NULL,
+    [active_flag] BIT NULL,
+    [boundary_long_1] DECIMAL (11, 8) NULL,
+    [boundary_lat_1] DECIMAL (11, 8) NULL,
+    [boundary_long_2] DECIMAL (11, 8) NULL,
+    [boundary_lat_2] DECIMAL (11, 8) NULL,
+    [noise_reduction] BIT NULL,
+    [work_schedule_rid] INT NULL,
+    [total_points] INT NULL,
+    [radius] DECIMAL (9, 6) NULL,
+    [co_ordinates] VARCHAR (MAX) NULL,
+    [is_created] BIT NULL,
+    [is_updated] BIT NULL
 );
 GO
 
@@ -44,7 +45,7 @@ ALTER TABLE [dbo].[geo_fence]
 GO
 
 ALTER TABLE [dbo].[geo_fence]
-    ADD CONSTRAINT [DF_geo_fence_colour] DEFAULT ((1)) FOR [colour_rid];
+    ADD CONSTRAINT [df_geo_fence_colour_code] DEFAULT (('CLR_BLUE')) FOR [colour_code];
 GO
 
 ALTER TABLE [dbo].[geo_fence]
@@ -56,11 +57,11 @@ ALTER TABLE [dbo].[geo_fence]
 GO
 
 ALTER TABLE [dbo].[geo_fence]
-    ADD CONSTRAINT [FK_geo_fence_colour] FOREIGN KEY ([colour_rid]) REFERENCES [dbo].[colour] ([colour_rid]);
+    ADD CONSTRAINT [fk_geo_fence_colour_code] FOREIGN KEY ([colour_code]) REFERENCES [dbo].[lookup_code] ([code]);
 
 
 GO
-ALTER TABLE [dbo].[geo_fence] NOCHECK CONSTRAINT [FK_geo_fence_colour];
+ALTER TABLE [dbo].[geo_fence] NOCHECK CONSTRAINT [fk_geo_fence_colour_code];
 GO
 
 ALTER TABLE [dbo].[geo_fence]

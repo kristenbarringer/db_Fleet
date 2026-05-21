@@ -5,7 +5,8 @@ CREATE TABLE [dbo].[asset]
     [description] NVARCHAR (300) NULL,
     [created] DATETIME NOT NULL,
     [tenant_id] NVARCHAR (50) NOT NULL,
-    [is_active] BIT NOT NULL,
+    [active] BIT NOT NULL,
+    -- TODO rename to is_active but caused an error in sp_refreshsqlmodule_internal
     [make] VARCHAR (255) NULL,
     [model] VARCHAR (255) NULL,
     [year] INT NULL,

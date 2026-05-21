@@ -5,7 +5,11 @@ CREATE TABLE [dbo].[equipment]
     [equipment_type_code] VARCHAR(30) NOT NULL,
     [created] DATETIME NOT NULL,
     [tenant_id] NVARCHAR (50) NOT NULL,
-    [asset_rid] INT NULL,
+    [asset_rid] INT NOT NULL,/* An equipment can only have one asset */
+    /* TODO rename asset_rid to asset_id - and possibly change type to uuid */
+    [gateway_id] INT NULL,
+    /* aka device_id */
+    /* An equipment can only have one device/gateway */
     [equipment_serial_number] NVARCHAR (50) NULL,
     [equipment_serial_version] NVARCHAR (50) NULL,
     [updated] DATETIME NULL,
@@ -34,8 +38,17 @@ ALTER TABLE [dbo].[equipment]
     ADD CONSTRAINT [fk_equipment_equipment_type_code] FOREIGN KEY ([equipment_type_code]) REFERENCES [dbo].[lookup_code] ([code]);
 GO
 
+CREATE NONCLUSTERED INDEX [ix_equipment_equipment_type_code]
+    ON [dbo].[equipment]([equipment_type_code] ASC);
+GO
+
+
 ALTER TABLE [dbo].[equipment]
     ADD CONSTRAINT [FK_equipment_asset] FOREIGN KEY ([asset_rid]) REFERENCES [dbo].[asset] ([asset_rid]);
+GO
+
+CREATE NONCLUSTERED INDEX [ix_equipment_asset_rid]
+    ON [dbo].[equipment]([asset_rid] ASC);
 GO
 
 ALTER TABLE [dbo].[equipment]

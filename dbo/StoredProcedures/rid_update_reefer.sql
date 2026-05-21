@@ -1,6 +1,8 @@
 CREATE procedure [dbo].[rid_update_reefer]
-  as 
-  BEGIN
+as
+BEGIN
+  print 'TODO FIX THIS'
+/* TODO FIX THIS
   insert into equipment_device_mapping (equipment_rid,device_rid)
 	select equipment_rid,device_rid from asset_info_reefer;
 
@@ -50,7 +52,7 @@ set
 asset.tenant_id = asset_tenant_info_table_reefer.tenant_id
 from
 asset_tenant_info_table_reefer  inner join asset ON asset.asset_rid = asset_tenant_info_table_reefer.asset_rid 
-
+*/
 end
 GO
 

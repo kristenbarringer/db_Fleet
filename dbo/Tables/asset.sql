@@ -1,77 +1,86 @@
 CREATE TABLE [dbo].[asset]
 (
+    [asset_uuid] NVARCHAR (50) CONSTRAINT [df_asset_id] DEFAULT ('3924d614-c329-43f4-8166-a6f1a9831c91') NOT NULL,
+    -- todo rename asset_uuid to id
     [asset_rid] INT IDENTITY (1, 1) NOT NULL,
-    [asset_name] VARCHAR (255) NULL,
-    [description] NVARCHAR (300) NULL,
-    [created] DATETIME NOT NULL,
-    [tenant_id] NVARCHAR (50) NOT NULL,
-    [active] BIT NOT NULL,
-    -- TODO rename to is_active but caused an error in sp_refreshsqlmodule_internal
-    [make] VARCHAR (255) NULL,
-    [model] VARCHAR (255) NULL,
+    -- TODO asset_rid MIGHT BE DEPRECATED or renamed to legacy_asset_rid
+    [tenant_id] NVARCHAR (50) CONSTRAINT [df_asset_tenant_id] DEFAULT (1) NOT NULL,
+    [name] VARCHAR    (255) NULL,
+    [description] NVARCHAR    (300) CONSTRAINT [df_asset_description] DEFAULT    ('TrackingV1Asset') NULL,
+    [make] VARCHAR    (255) NULL,
+    [model] VARCHAR    (255) NULL,
     [year] INT NULL,
-    [asset_type_code] VARCHAR (30) NOT NULL,
-    [created_by_user_rid] INT NOT NULL,
-    [vin] VARCHAR (255) NULL,
-    [updated] DATETIME NULL,
+    [vin] VARCHAR    (255) NULL,
+    [fuel_tank_size] FLOAT    (53) NULL,
+
+    -- foreign keys:
+    [asset_type_code] VARCHAR (30) CONSTRAINT [df_asset_asset_type_code] DEFAULT ('AST_TRUCK') NOT NULL,
     [power_source_code] VARCHAR (30) NULL,
-    [asset_uuid] NVARCHAR (50) DEFAULT ('3924d614-c329-43f4-8166-a6f1a9831c91') NOT NULL,
     [asset_icon_code] VARCHAR (30) NULL,
     [asset_usage_code] VARCHAR (30) NULL,
-    [activation_status_code] VARCHAR (30) DEFAULT (('AAS_ACTIVATED')) NOT NULL,
+    [activation_status_code] VARCHAR (30) CONSTRAINT df_asset_activation_status_code DEFAULT 'AAS_ACTIVATED' NOT NULL,
     [billing_service_level_code] VARCHAR (30) NULL,
-    [activated] DATETIME NULL,
-    [user_activation] DATETIME2 (6) NULL,
+
+    -- flags
+
+    [active] BIT NOT NULL,
+    -- TODO rename active to is_active but caused an error in sp_refreshsqlmodule_internal
+
     [door_sensor_1] BIT NULL,
     [door_sensor_2] BIT NULL,
-    [lock] BIT NULL,
+    [door_sensor_3] BIT NULL,
     [cargowatch_download] BIT NULL,
     [servicewatch_download] BIT NULL,
-    [fuel_tank_size] FLOAT (53) NULL,
+    [lock] BIT NULL,
+
+    -- dates
+    [created] DATETIME CONSTRAINT [df_asset_created] DEFAULT (getdate()) NOT NULL,
+    [updated] DATETIME NULL,
+    [activated] DATETIME NULL,
+    [replacement_date] DATETIME NULL,
+    [user_activation] DATETIME2 (6) NULL,
+
+    -- who 
+    [created_by_user_rid] INT CONSTRAINT [df_asset_created_by_user_rid] DEFAULT (1) NOT NULL,
+
+    -- notes
     [notes] VARCHAR (255) NULL,
     [additional_notes] VARCHAR (255) NULL,
-    [door_sensor_3] BIT NULL,
-    [replacement_date] DATETIME NULL,
     [account_additional_notes] VARCHAR (255) NULL
 );
 GO
 
+
+
 ALTER TABLE [dbo].[asset]
-    ADD CONSTRAINT [DF_asset_description_v1migration] DEFAULT ('TrackingV1Asset') FOR [description];
+    ADD CONSTRAINT [fk_asset_activation_status] FOREIGN KEY ([activation_status_code]) REFERENCES [dbo].[lookup_code] ([code]);
+GO
+
+CREATE NONCLUSTERED INDEX [ix_asset_activation_status_code]
+    ON [dbo].[asset]([activation_status_code] ASC);
 GO
 
 ALTER TABLE [dbo].[asset]
-    ADD CONSTRAINT [DF_tenant_id_v1migration] DEFAULT ((1)) FOR [tenant_id];
+    ADD CONSTRAINT [fk_asset_asset_type] FOREIGN KEY ([asset_type_code]) REFERENCES [dbo].[lookup_code] ([code]);
+GO
+
+CREATE NONCLUSTERED INDEX [ix_asset_asset_type_code]
+    ON [dbo].[asset]([asset_type_code] ASC);
 GO
 
 ALTER TABLE [dbo].[asset]
-    ADD CONSTRAINT [df_asset_asset_type_code] DEFAULT (('AST_TRUCK')) FOR [asset_type_code];
+    ADD CONSTRAINT [fk_asset_asset_usage_rid] FOREIGN KEY ([asset_usage_code]) REFERENCES [dbo].[lookup_code] ([code]);
+GO
+
+CREATE NONCLUSTERED INDEX [ix_asset_asset_usage_code]
+    ON [dbo].[asset]([asset_usage_code] ASC);
 GO
 
 ALTER TABLE [dbo].[asset]
-    ADD CONSTRAINT [DF_created_by_user_rid_v1migration] DEFAULT ((1)) FOR [created_by_user_rid];
+    ADD CONSTRAINT [cix_asset_asset_rid] PRIMARY KEY CLUSTERED ([asset_rid] ASC) WITH (FILLFACTOR = 100, DATA_COMPRESSION = PAGE);
 GO
 
 ALTER TABLE [dbo].[asset]
-    ADD CONSTRAINT [DF_asset_created] DEFAULT (getdate()) FOR [created];
+    ADD CONSTRAINT [fk_asset_asset_type_code] FOREIGN KEY ([asset_type_code]) REFERENCES [dbo].[lookup_code] ([code]);
 GO
-
-ALTER TABLE [dbo].[asset]
-    ADD CONSTRAINT [FK_asset_activation_status] FOREIGN KEY ([activation_status_code]) REFERENCES [dbo].[lookup_code] ([code]);
-GO
-
-ALTER TABLE [dbo].[asset]
-    ADD CONSTRAINT [FK_asset_asset_type] FOREIGN KEY ([asset_type_code]) REFERENCES [dbo].[lookup_code] ([code]);
-GO
-
-ALTER TABLE [dbo].[asset]
-    ADD CONSTRAINT [FK_asset_asset_usage_rid] FOREIGN KEY ([asset_usage_code]) REFERENCES [dbo].[lookup_code] ([code]);
-GO
-
-ALTER TABLE [dbo].[asset]
-    ADD CONSTRAINT [idx_assetPK] PRIMARY KEY CLUSTERED ([asset_rid] ASC) WITH (FILLFACTOR = 100, DATA_COMPRESSION = PAGE);
-GO
-
-ALTER TABLE [dbo].[asset]
-    ADD CONSTRAINT [FK_asset_asset_type_code] FOREIGN KEY ([asset_type_code]) REFERENCES [dbo].[lookup_code] ([code]);
-GO
+ 

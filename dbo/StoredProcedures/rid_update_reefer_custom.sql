@@ -1,11 +1,13 @@
 CREATE procedure [dbo].[rid_update_reefer_custom]
-@pipeline_run_id nvarchar(100)
-  as 
-  BEGIN
+  @pipeline_run_id nvarchar(100)
+as
+BEGIN
+  print 'TODO FIX THIS'
+/* TODO FIX THIS
     INSERT INTO equipment_device_mapping (equipment_rid,device_rid)
 	SELECT equipment_rid,device_rid from asset_info_reefer;
 
-/* TODO FIX THIS
+
     UPDATE controller
     SET
     controller.equipment_rid = asset_info_reefer.equipment_rid

@@ -1,7 +1,9 @@
 CREATE   procedure [dbo].[rid_update_custom]
-@pipeline_run_id nvarchar(100)
-AS 
+    @pipeline_run_id nvarchar(100)
+AS
 BEGIN
+    print 'TODO FIX THIS'
+/* TODO FIX THIS
 insert into equipment_device_mapping (equipment_rid,device_rid)
 select equipment_rid,device_rid from asset_info WHERE pipeline_id = @pipeline_run_id;
 
@@ -51,7 +53,7 @@ asset.tenant_id = asset_tenant_info_table.tenant_id
 from
 asset_tenant_info_table  inner join asset ON asset.asset_rid = asset_tenant_info_table.asset_rid 
 WHERE asset_tenant_info_table.pipeline_id = @pipeline_run_id;
-
+*/
 end
 GO
 

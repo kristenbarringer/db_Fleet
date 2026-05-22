@@ -1,15 +1,21 @@
 CREATE TABLE [dbo].[equipment]
 (
+	[equipment_uuid] UNIQUEIDENTIFIER CONSTRAINT [df_equipment_id] DEFAULT (NEWID()) NOT NULL,
+    -- todo rename equipment_uuid to id?
     [equipment_rid] INT IDENTITY (1, 1) NOT NULL,
+    -- TODO equipment_rid MIGHT BE DEPRECATED or renamed to legacy_equipment_rid?
+   
     [equipment_name] NVARCHAR (50) NOT NULL,
     [equipment_type_code] VARCHAR(30) NOT NULL,
     [created] DATETIME NOT NULL,
     [tenant_id] NVARCHAR (50) NOT NULL,
-    [asset_rid] INT NOT NULL,/* An equipment can only have one asset */
+    [asset_rid] INT NULL,/* A equipment can only have one asset */
+    [asset_uuid] UNIQUEIDENTIFIER NULL,/* A equipment can only have one asset */
     /* TODO rename asset_rid to asset_id - and possibly change type to uuid */
-    [gateway_id] INT NULL,
-    /* aka device_id */
+    [device_id] INT NULL,
+    /* aka device_id = gateway_id - might rename to gateway */
     /* An equipment can only have one device/gateway */
+    [device_uuid] UNIQUEIDENTIFIER NULL,/* An equipment can only have one device/gateway  */
     [equipment_serial_number] NVARCHAR (50) NULL,
     [equipment_serial_version] NVARCHAR (50) NULL,
     [updated] DATETIME NULL,

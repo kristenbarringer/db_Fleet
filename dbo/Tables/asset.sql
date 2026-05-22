@@ -1,9 +1,9 @@
 CREATE TABLE [dbo].[asset]
 (
-    [asset_uuid] NVARCHAR (50) CONSTRAINT [df_asset_id] DEFAULT ('3924d614-c329-43f4-8166-a6f1a9831c91') NOT NULL,
-    -- todo rename asset_uuid to id
+	[asset_uuid] UNIQUEIDENTIFIER CONSTRAINT [df_asset_id] DEFAULT (NEWID()) NOT NULL,
+    -- todo rename asset_uuid to id?
     [asset_rid] INT IDENTITY (1, 1) NOT NULL,
-    -- TODO asset_rid MIGHT BE DEPRECATED or renamed to legacy_asset_rid
+    -- TODO asset_rid MIGHT BE DEPRECATED or renamed to legacy_asset_rid?
     [tenant_id] NVARCHAR (50) CONSTRAINT [df_asset_tenant_id] DEFAULT (1) NOT NULL,
     [asset_name] VARCHAR    (255) NULL,
     -- TODO rename asset_name to name but caused error in sys.sp_refreshsqlmodule_internal

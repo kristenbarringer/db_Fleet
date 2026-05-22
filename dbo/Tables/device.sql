@@ -1,11 +1,15 @@
 CREATE TABLE [dbo].[device]
 (
+	[device_uuid] UNIQUEIDENTIFIER CONSTRAINT [df_device_id] DEFAULT (NEWID()) NOT NULL,
+    -- todo rename device_uuid to id?
     [device_rid] INT IDENTITY (1, 1) NOT NULL,
+    -- TODO device_rid MIGHT BE DEPRECATED or renamed to legacy_device_rid?
     [device_name] NVARCHAR (50) NOT NULL,
     [device_type_code] VARCHAR(30) NOT NULL,
     [created] DATETIME NOT NULL,
     [tenant_id] NVARCHAR (50) NOT NULL,
-    [asset_id] INT NULL,/* A device can only have one asset */
+    [asset_rid] INT NULL,/* A device can only have one asset */
+    [asset_uuid] UNIQUEIDENTIFIER NULL,/* A device can only have one asset */
     [device_serial_number] NVARCHAR (50) NULL,
     [device_software_version] NVARCHAR (50) NULL,
     [logging_interval_rid_on_code] VARCHAR(30) NULL,
@@ -18,8 +22,9 @@ CREATE TABLE [dbo].[device]
     [updated] DATETIME NULL,
     [service_level_code] VARCHAR(30) NULL,
     [notes] NVARCHAR (1000) NULL,
-    [auto_update_sent] BIT NULL,
-    [device_uuid] NVARCHAR (50) NULL
+
+[auto_update_sent] BIT
+NULL
 );
 GO
 

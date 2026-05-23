@@ -1,12 +1,14 @@
 -- =============================================================================
 -- Stored Procedure: usp_seed_load_device
--- Purpose:  Load test data into dbo.device from dbo.zzz_seed_test_data_vehicle.
--- Scope:    Dev environments ONLY. Refuses to run on non-Dev servers.
+-- Purpose:  Generate fake test device data, one device per asset.
+-- Scope:    Dev environments ONLY.
 -- Behavior: Flush-fill. Deletes all rows in dbo.device, then re-inserts.
---           Source rows are deduplicated by (tk_mu_data_rid, vehicle_rid).
---           Each device links to its asset via asset.vin = seed.truck_VIN.
---           Tenant is resolved via dbo.zzz_seed_test_data_tenant_xref using
---           customer_rid as the join key.
+--           Reads from dbo.asset (which must be loaded first via
+--           usp_seed_load_asset) and generates one device per asset.
+--           Device fields are realistic-looking fake data:
+--             - device_name like 'T-9876543'
+--             - device_serial_number like 11-digit number string
+--             - tenant_id and asset linkage copied from the parent asset
 --           Must run AFTER usp_seed_load_asset.
 -- =============================================================================
 CREATE PROCEDURE dbo.usp_seed_load_device
@@ -49,44 +51,30 @@ BEGIN
         auto_update_sent
     )
     SELECT
-        CONCAT('Device for ', ISNULL(NULLIF(v.vehicle_name, 'NULL'), 'Unknown')) AS device_name,
-        'DTP_BLUEBOX'                              AS device_type_code,            -- table default
-        GETDATE()                                  AS created,
-        -- tenant_id is currently NVARCHAR(50); cast UUID to string.
-        CAST(xref.tenant_uuid AS NVARCHAR(50))     AS tenant_id,
-        a.asset_rid                                AS asset_rid,
-        a.asset_uuid                               AS asset_uuid,
-        NULLIF(v.thermoking_serial_number, 'NULL') AS device_serial_number,
-        NULL                                       AS device_software_version,
-        NULL                                       AS logging_interval_rid_on_code,
-        NULL                                       AS logging_interval_rid_off_code,
-        NULL                                       AS deactivated_date,
-        'TMT_TRACKING_MODE'                        AS telematics_mode_type_code,
-        NULL                                       AS activated_by_user_rid,
-        NULL                                       AS deactivated_by_user_rid,
-        NULL                                       AS updated_by_user_rid,
-        NULL                                       AS updated,
-        NULL                                       AS service_level_code,
-        NULL                                       AS notes,
-        NULL                                       AS auto_update_sent
-    FROM
-    (
-        -- Deduplicate source by (tk_mu_data_rid, vehicle_rid).
-        SELECT
-            tk_mu_data_rid,
-            vehicle_rid,
-            MAX(vehicle_name)             AS vehicle_name,
-            MAX(truck_VIN)                AS truck_VIN,
-            MAX(thermoking_serial_number) AS thermoking_serial_number,
-            MAX(customer_rid)             AS customer_rid
-        FROM dbo.zzz_seed_test_data_vehicle
-        GROUP BY tk_mu_data_rid, vehicle_rid
-    ) v
-    INNER JOIN dbo.asset a
-        ON a.vin = NULLIF(v.truck_VIN, 'NULL')   -- requires asset already loaded
-    LEFT JOIN dbo.zzz_seed_test_data_tenant_xref xref
-        ON xref.customer_rid = v.customer_rid
-    WHERE xref.tenant_uuid IS NOT NULL;          -- skip rows we can't map to a tenant
+        -- Fake device_name: 'T-' + 7-digit number derived from asset_rid
+        --   e.g. asset_rid=12 -> 'T-0000012'
+        CONCAT('T-', RIGHT('0000000' + CAST(a.asset_rid AS NVARCHAR(10)), 7)) AS device_name,
+        'DTP_BLUEBOX'                                                          AS device_type_code,
+        GETDATE()                                                              AS created,
+        a.tenant_id                                                            AS tenant_id,        -- copy from parent asset
+        a.asset_rid                                                            AS asset_rid,
+        a.asset_uuid                                                           AS asset_uuid,
+        -- Fake serial number: 11-digit number derived from asset_rid
+        --   e.g. asset_rid=12 -> '20260000012'
+        CONCAT('2026', RIGHT('0000000' + CAST(a.asset_rid AS NVARCHAR(10)), 7)) AS device_serial_number,
+        '2025.6.26.2'                                                          AS device_software_version,  -- typical version string
+        NULL                                                                   AS logging_interval_rid_on_code,
+        NULL                                                                   AS logging_interval_rid_off_code,
+        NULL                                                                   AS deactivated_date,
+        'TMT_TRACKING_MODE'                                                    AS telematics_mode_type_code,
+        NULL                                                                   AS activated_by_user_rid,
+        NULL                                                                   AS deactivated_by_user_rid,
+        NULL                                                                   AS updated_by_user_rid,
+        NULL                                                                   AS updated,
+        NULL                                                                   AS service_level_code,
+        NULL                                                                   AS notes,
+        NULL                                                                   AS auto_update_sent
+    FROM dbo.asset a;
 
     DECLARE @rows INT = @@ROWCOUNT;
     PRINT CONCAT('usp_seed_load_device: inserted ', @rows, ' row(s) into dbo.device.');

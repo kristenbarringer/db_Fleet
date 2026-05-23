@@ -3,7 +3,9 @@
 -- Purpose:  Load test data into dbo.asset from dbo.zzz_seed_test_data_vehicle.
 -- Scope:    Dev environments ONLY. Refuses to run on non-Dev servers.
 -- Behavior: Flush-fill. Deletes all rows in dbo.asset, then re-inserts.
---           Source rows are deduplicated by (tk_mu_data_rid, vehicle_rid).
+--           Source rows are deduplicated by vehicle_rid alone (one row per
+--           physical vehicle - the seed data has multiple time-series snapshots
+--           per vehicle which we collapse here).
 --           Tenant is resolved via dbo.zzz_seed_test_data_tenant_xref using
 --           customer_rid as the join key.
 -- =============================================================================
@@ -92,9 +94,8 @@ BEGIN
         NULL                                        AS account_additional_notes
     FROM
     (
-        -- Deduplicate source by (tk_mu_data_rid, vehicle_rid).
+        -- Deduplicate source by vehicle_rid alone (one row per physical vehicle).
         SELECT
-            tk_mu_data_rid,
             vehicle_rid,
             MAX(vehicle_name)   AS vehicle_name,
             MAX(truck_VIN)      AS truck_VIN,
@@ -102,7 +103,8 @@ BEGIN
             MAX(power_source)   AS power_source,
             MAX(customer_rid)   AS customer_rid
         FROM dbo.zzz_seed_test_data_vehicle
-        GROUP BY tk_mu_data_rid, vehicle_rid
+        WHERE vehicle_rid IS NOT NULL
+        GROUP BY vehicle_rid
     ) v
     LEFT JOIN dbo.lookup_code lc_power
         ON  lc_power.lookup_list_code             = 'power_source'

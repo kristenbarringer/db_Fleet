@@ -5,6 +5,8 @@
 -- Behavior: Flush-fill. Deletes all rows in dbo.device, then re-inserts.
 --           Source rows are deduplicated by (tk_mu_data_rid, vehicle_rid).
 --           Each device links to its asset via asset.vin = seed.truck_VIN.
+--           Tenant is resolved via dbo.zzz_seed_test_data_tenant_xref using
+--           customer_rid as the join key.
 --           Must run AFTER usp_seed_load_asset.
 -- =============================================================================
 CREATE PROCEDURE dbo.usp_seed_load_device
@@ -76,14 +78,14 @@ BEGIN
             MAX(vehicle_name)             AS vehicle_name,
             MAX(truck_VIN)                AS truck_VIN,
             MAX(thermoking_serial_number) AS thermoking_serial_number,
-            MAX(external_customer_id)     AS external_customer_id
+            MAX(customer_rid)             AS customer_rid
         FROM dbo.zzz_seed_test_data_vehicle
         GROUP BY tk_mu_data_rid, vehicle_rid
     ) v
     INNER JOIN dbo.asset a
         ON a.vin = NULLIF(v.truck_VIN, 'NULL')   -- requires asset already loaded
     LEFT JOIN dbo.zzz_seed_test_data_tenant_xref xref
-        ON xref.external_customer_id = NULLIF(v.external_customer_id, 'NULL')
+        ON xref.customer_rid = v.customer_rid
     WHERE xref.tenant_uuid IS NOT NULL;          -- skip rows we can't map to a tenant
 
     DECLARE @rows INT = @@ROWCOUNT;

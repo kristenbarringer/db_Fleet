@@ -4,7 +4,8 @@
 -- Scope:    Dev environments ONLY. Refuses to run on non-Dev servers.
 -- Behavior: Flush-fill. Deletes all rows in dbo.asset, then re-inserts.
 --           Source rows are deduplicated by (tk_mu_data_rid, vehicle_rid).
---           Tenant is resolved via dbo.zzz_seed_test_data_tenant_xref.
+--           Tenant is resolved via dbo.zzz_seed_test_data_tenant_xref using
+--           customer_rid as the join key.
 -- =============================================================================
 CREATE PROCEDURE dbo.usp_seed_load_asset
 AS
@@ -95,11 +96,11 @@ BEGIN
         SELECT
             tk_mu_data_rid,
             vehicle_rid,
-            MAX(vehicle_name)         AS vehicle_name,
-            MAX(truck_VIN)            AS truck_VIN,
-            MAX(fuel_tank_size)       AS fuel_tank_size,
-            MAX(power_source)         AS power_source,
-            MAX(external_customer_id) AS external_customer_id
+            MAX(vehicle_name)   AS vehicle_name,
+            MAX(truck_VIN)      AS truck_VIN,
+            MAX(fuel_tank_size) AS fuel_tank_size,
+            MAX(power_source)   AS power_source,
+            MAX(customer_rid)   AS customer_rid
         FROM dbo.zzz_seed_test_data_vehicle
         GROUP BY tk_mu_data_rid, vehicle_rid
     ) v
@@ -107,7 +108,7 @@ BEGIN
         ON  lc_power.lookup_list_code             = 'power_source'
         AND lc_power.code_without_prefix_all_caps = NULLIF(v.power_source, 'NULL')
     LEFT JOIN dbo.zzz_seed_test_data_tenant_xref xref
-        ON  xref.external_customer_id             = NULLIF(v.external_customer_id, 'NULL')
+        ON xref.customer_rid = v.customer_rid
     WHERE xref.tenant_uuid IS NOT NULL;  -- skip seed rows we can't map to a tenant
 
     DECLARE @rows INT = @@ROWCOUNT;
